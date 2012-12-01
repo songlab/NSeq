@@ -1,0 +1,103 @@
+annotation.processing.enabled=true
+annotation.processing.enabled.in.editor=false
+annotation.processing.run.all.processors=true
+application.desc=A simple java desktop application based on Swing Application Framework
+application.homepage=http://appframework.dev.java.net
+application.title=Basic Application Example
+application.vendor=Sun Microsystems Inc.
+build.classes.dir=${build.dir}/classes
+build.classes.excludes=**/*.java,**/*.form
+# This directory is removed when the project is cleaned:
+build.dir=build
+build.generated.dir=${build.dir}/generated
+build.generated.sources.dir=${build.dir}/generated-sources
+# Only compile against the classpath explicitly listed here:
+build.sysclasspath=ignore
+build.test.classes.dir=${build.dir}/test/classes
+build.test.results.dir=${build.dir}/test/results
+debug.classpath=\
+    ${run.classpath}
+debug.test.classpath=\
+    ${run.test.classpath}
+# This directory is removed when the project is cleaned:
+dist.dir=dist
+dist.jar=${dist.dir}/NSeq.jar
+dist.javadoc.dir=${dist.dir}/javadoc
+endorsed.classpath=
+excludes=
+file.reference.commons-cli-1.2.jar=/Users/anellore/Downloads/commons-cli-1.2/commons-cli-1.2.jar
+file.reference.commons-cli-1.2.jar-1=dist/lib/commons-cli-1.2.jar
+file.reference.commons-cli-1.2.jar-2=/Users/anellore/Downloads/commons-cli-1.2/commons-cli-1.2.jar
+file.reference.itextpdf-5.2.1.jar=/Users/anellore/Downloads/itext-5.2.1/itextpdf-5.2.1.jar
+file.reference.jcommon-1.0.17.jar=/Users/anellore/Downloads/jfreechart-1.0.14/lib/jcommon-1.0.17.jar
+file.reference.jcommon-1.0.17.jar-1=/Users/anellore/Downloads/jfreechart-1.0.14/lib/jcommon-1.0.17.jar
+file.reference.jfreechart-1.0.14.jar=/Users/anellore/Downloads/jfreechart-1.0.14/lib/jfreechart-1.0.14.jar
+file.reference.jfreechart-1.0.14.jar-1=/Users/anellore/Downloads/jfreechart-1.0.14/lib/jfreechart-1.0.14.jar
+file.reference.jsc.jar=/Users/jssong/Java/jsc.jar
+file.reference.jsc.jar-1=/Users/anellore/Research/NucleosomeFinal3/NSeqIntervalWise_4.26.12/dist/lib/jsc.jar
+file.reference.jsc.jar-2=/Users/anellore/Research/NSeq/NewNucleosome/NSeq/dist/lib/jsc.jar
+file.reference.sam-1.66.jar=/Users/jssong/Java/sam-1.66.jar
+file.reference.sam-1.66.jar-1=/Users/anellore/Research/NucleosomeFinal3/NSeqIntervalWise_4.26.12/dist/lib/sam-1.66.jar
+file.reference.sam-1.66.jar-2=/Users/jssong/Java/sam-1.66.jar
+file.reference.sam-1.66.jar-3=/Users/anellore/Research/NSeq/NewNucleosome/NSeq/dist/lib/sam-1.66.jar
+includes=**
+jar.compress=false
+javac.classpath=\
+    ${libs.swing-app-framework.classpath}:\
+    ${libs.swing-layout.classpath}:\
+    ${libs.beans-binding.classpath}:\
+    ${file.reference.jsc.jar}:\
+    ${file.reference.sam-1.66.jar}:\
+    ${file.reference.jfreechart-1.0.14.jar}:\
+    ${file.reference.jsc.jar-1}:\
+    ${file.reference.sam-1.66.jar-1}:\
+    ${file.reference.jcommon-1.0.17.jar}:\
+    ${libs.absolutelayout.classpath}:\
+    ${file.reference.commons-cli-1.2.jar}:\
+    ${file.reference.sam-1.66.jar-2}:\
+    ${file.reference.commons-cli-1.2.jar-1}:\
+    ${file.reference.itextpdf-5.2.1.jar}:\
+    ${file.reference.sam-1.66.jar-3}:\
+    ${file.reference.jsc.jar-2}:\
+    ${file.reference.commons-cli-1.2.jar-2}:\
+    ${file.reference.jfreechart-1.0.14.jar-1}:\
+    ${file.reference.jcommon-1.0.17.jar-1}
+# Space-separated list of extra javac options
+javac.compilerargs=-Xlint:unchecked
+javac.deprecation=false
+javac.processorpath=\
+    ${javac.classpath}
+javac.source=1.5
+javac.target=1.5
+javac.test.classpath=\
+    ${javac.classpath}:\
+    ${build.classes.dir}
+javadoc.additionalparam=
+javadoc.author=false
+javadoc.encoding=${source.encoding}
+javadoc.noindex=false
+javadoc.nonavbar=false
+javadoc.notree=false
+javadoc.private=false
+javadoc.splitindex=true
+javadoc.use=true
+javadoc.version=false
+javadoc.windowtitle=
+main.class=nseq.NSeqApp
+manifest.file=manifest.mf
+meta.inf.dir=${src.dir}/META-INF
+mkdist.disabled=false
+platform.active=default_platform
+run.classpath=\
+    ${javac.classpath}:\
+    ${build.classes.dir}
+# Space-separated list of JVM arguments used when running the project
+# (you may also define separate properties like run-sys-prop.name=value instead of -Dname=value
+# or test-sys-prop.name=value to set system properties for unit tests):
+run.jvmargs=-Xmx3g
+run.test.classpath=\
+    ${javac.test.classpath}:\
+    ${build.test.classes.dir}
+source.encoding=UTF-8
+src.dir=src
+test.src.dir=test

@@ -1,0 +1,36 @@
+#######################
+   NSeq Version 1.0
+#######################
+
+COMMAND PROMPT EXAMPLE
+
+From this directory:
+
+java -jar -Xmx1g ../dist/NSeq.jar -a GSM552910_Scer_CM_Jul2108_chr2.sam -i sam -l GSM552910_Scerevisiae_Length.txt -f 0.01 -s 10 -t 4
+
+will analyze the data at 1% FDR cutoff using 10 simulations and 4 threads.
+
+
+The chromosome 2 data were obtained from http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM552910
+
+REFERENCE:
+The role of nucleosome positioning in the evolution of gene regulation.
+Tsankov AM, Thompson DA, Socha A, Regev A, Rando OJ.
+PLoS Biol. 2010 Jul 6;8(7):e1000414.
+
+-----------------------------
+
+
+GUI EXAMPLE
+
+From this directory:
+cd ../dist
+java -jar -Xmx1g NSeq.jar
+
+1. Click "Get started."
+2. Click "chromosome length file" and choose GSM552910_Scerevisiae_Length.txt in this Example folder.
+3. Click "alignment file" and choose GSM552910_Scer_CM_Jul2108_chr2.sam in this Example folder.
+4. Click "Run."
+5. Click "Display."
+
+
