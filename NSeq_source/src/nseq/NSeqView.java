@@ -24,6 +24,7 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -50,11 +51,16 @@ import javax.tools.FileObject;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -365,6 +371,8 @@ public class NSeqView extends FrameView {
         jPanel11 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         displayTextPane = new javax.swing.JTextPane();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
 
@@ -1070,6 +1078,24 @@ public class NSeqView extends FrameView {
 
         jPanel5.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 960, 110));
 
+        jCheckBox2.setText(resourceMap.getString("jCheckBox2.text")); // NOI18N
+        jCheckBox2.setName("jCheckBox2"); // NOI18N
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 270, -1, -1));
+
+        jCheckBox3.setText(resourceMap.getString("jCheckBox3.text")); // NOI18N
+        jCheckBox3.setName("jCheckBox3"); // NOI18N
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 510, -1, -1));
+
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1077,11 +1103,11 @@ public class NSeqView extends FrameView {
             .add(jPanel4Layout.createSequentialGroup()
                 .add(31, 31, 31)
                 .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
@@ -1489,6 +1515,14 @@ private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     
 }//GEN-LAST:event_jComboBox1ActionPerformed
 
+private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+    displayResults(Integer.parseInt(chrStartPosition.getText()), Integer.parseInt(chrEndPosition.getText()));
+}//GEN-LAST:event_jCheckBox2ActionPerformed
+
+private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+    displayResults(Integer.parseInt(chrStartPosition.getText()), Integer.parseInt(chrEndPosition.getText()));
+}//GEN-LAST:event_jCheckBox3ActionPerformed
+
 private void DataProcess(){
     double oddsCutOff = Double.parseDouble(tsCutoffTextField.getText());
     long start = System.currentTimeMillis();
@@ -1564,6 +1598,7 @@ private void DataProcess(){
     DefaultCaret caret = (DefaultCaret)runTextPane.getCaret();
     caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     chrComboBox.setModel(new javax.swing.DefaultComboBoxModel(FileParser.getOrderedChromosomes().toArray()));
+    jCheckBox3.setSelected(true);
     displayResults(Integer.parseInt(chrStartPosition.getText()), Integer.parseInt(chrEndPosition.getText()));
 }
 
@@ -1595,10 +1630,20 @@ private void displayResults(int startPosition, int endPosition) {
         //Add annotations for nucleosome centers
         CandidateNucleosome[] chrNucleosomes = nucleosomes.get((String) chrComboBox.getSelectedItem());
         int nucLocation;
-        for (CandidateNucleosome nucleosome : chrNucleosomes) {
-            nucLocation = nucleosome.getLoc();
-            if (startPosition <= nucLocation && endPosition >= nucLocation) {
-                nucleosomePlot.addAnnotation(new XYLineAnnotation(nucLocation,0,nucLocation,100,new BasicStroke(1.5f), Color.red));
+        if (jCheckBox3.isSelected()) {
+            for (CandidateNucleosome nucleosome : chrNucleosomes) {
+                nucLocation = nucleosome.getLoc();
+                if (startPosition <= nucLocation && endPosition >= nucLocation) {
+                    nucleosomePlot.addAnnotation(new XYLineAnnotation(nucLocation,0,nucLocation,100,new BasicStroke(1.5f), Color.magenta));
+                }
+            }
+        }
+        if (jCheckBox2.isSelected()) {
+            for (CandidateNucleosome nucleosome : chrNucleosomes) {
+                nucLocation = nucleosome.getLoc();
+                if (startPosition <= nucLocation && endPosition >= nucLocation) {
+                    readPlot.addAnnotation(new XYLineAnnotation(nucLocation,-100,nucLocation,100,new BasicStroke(1.5f), Color.magenta));
+                }
             }
         }
         if (readChartPanelContainer.getComponentCount() > 0) {
@@ -1675,7 +1720,7 @@ private XYSeriesCollection[] createXYReadNucleosomeSeries(int startPosition, int
     return dataset;
 }
 
-private static JFreeChart createReadChart(XYSeriesCollection aSeriesCollection) {
+private JFreeChart createReadChart(XYSeriesCollection aSeriesCollection) {
     JFreeChart chart = ChartFactory.createHistogram(
     "Read counts", // chart title "Release", // domain axis label
     "Position",
@@ -1685,10 +1730,22 @@ private static JFreeChart createReadChart(XYSeriesCollection aSeriesCollection) 
     true,
     true,// tooltips
     false);
+    LegendItemCollection legend = new LegendItemCollection();
+    //chart.getXYPlot().getRenderer().setSeriesPaint(0, Color.BLUE);
+    //chart.getXYPlot().getRenderer().setSeriesPaint(1, Color.RED);
+    LegendItem li = new LegendItem("Sense strand reads", "-", null, null, Plot.DEFAULT_LEGEND_ITEM_BOX, Color.BLUE);
+    legend.add(li);
+    li = new LegendItem("Antisense strand reads", "-", null, null, Plot.DEFAULT_LEGEND_ITEM_BOX, Color.RED);
+    legend.add(li);
+    if (jCheckBox2.isSelected()) {
+        li = new LegendItem("Nucleosome center", "-", null, null, new java.awt.Rectangle(4, 0, 1, 15), Color.MAGENTA);
+        legend.add(li);
+    }
+    chart.getXYPlot().setFixedLegendItems(legend);
     return chart;
 }
 
-private static JFreeChart createNucleosomeChart(XYSeriesCollection aSeriesCollection) {
+private JFreeChart createNucleosomeChart(XYSeriesCollection aSeriesCollection) {
     JFreeChart chart = ChartFactory.createXYAreaChart(
     "Nucleosome coverage", // chart title "Release", // domain axis label
     "Position",
@@ -1698,6 +1755,16 @@ private static JFreeChart createNucleosomeChart(XYSeriesCollection aSeriesCollec
     true,
     true,// tooltips
     false);
+    LegendItemCollection legend = new LegendItemCollection();
+    chart.getXYPlot().getRenderer().setSeriesPaint(0, Color.MAGENTA);
+    chart.getXYPlot().getRenderer().setSeriesPaint(1, Color.BLUE.brighter().brighter());
+    LegendItem li = new LegendItem("Nucleosome coverage", "-", null, null, Plot.DEFAULT_LEGEND_ITEM_BOX, Color.BLUE.brighter().brighter());
+    legend.add(li);
+    if (jCheckBox3.isSelected()) {
+        li = new LegendItem("Nucleosome center", "-", null, null, new java.awt.Rectangle(4, 0, 1, 15), Color.MAGENTA);
+        legend.add(li);
+    }
+    chart.getXYPlot().setFixedLegendItems(legend);
     return chart;
 }
 
@@ -1720,6 +1787,8 @@ private void saveResults(HashMap<String,CandidateNucleosome[]> nucleosomes){
     protected javax.swing.JButton exportReadPlotToPDF;
     protected javax.swing.JComboBox inputComboBox;
     protected javax.swing.JButton jButton2;
+    protected javax.swing.JCheckBox jCheckBox2;
+    protected javax.swing.JCheckBox jCheckBox3;
     protected javax.swing.JComboBox jComboBox1;
     protected javax.swing.JFileChooser jFileChooser1;
     protected javax.swing.JFileChooser jFileChooser2;
